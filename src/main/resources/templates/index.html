@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Start</title>
+</head>
+<body>
+
+    <table border="1px">
+
+        <tr><th>Title</th> <th>Body</th></tr>
+
+        <tr th:each="news,iter:${newsList}">
+            <td th:utext="${news.getTitle()}"></td>
+            <td th:utext="${news.getBody()}"></td>
+        </tr>
+
+    </table>
+
+    <br>
+    <br>
+
+    <form th:action="@{/}" th:object="${newsForm}" method="post">
+        <label>Title: <input th:field="*{title}" type="text" placeholder="Title"></label>
+        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+        <br>
+        <label>Body:  <input th:field="*{body}" type="text" placeholder="Body"></label>
+        <span th:if="${#fields.hasErrors('body')}" th:errors="*{body}"></span>
+        <br>
+        <br>
+        <input type="submit" value="Add">
+    </form>
+    <br>
+    <br>
+    <span th:if="${message!=null}" th:utext="${message}"></span>
+
+</body>
+</html>
