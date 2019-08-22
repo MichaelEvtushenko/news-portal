@@ -33,19 +33,22 @@ public class NewsController {
         return "index";
     }
     @PostMapping("/")
-    public String addNews(@ModelAttribute("newsForm") @Validated NewsForm form, BindingResult result, Model model){
-        if(!result.hasErrors()) {
-            if(newsService.findNewsByTitle(form.getTitle())==null) {
-                News news = new News();
-                news.setBody(form.getBody());
-                news.setTitle(form.getTitle());
-                newsService.saveNews(news);
-            }
-            else model.addAttribute("message","Title already taken");
-            model.addAttribute("newsForm", new NewsForm());
+    public String addNews(@ModelAttribute("newsForm") @Validated NewsForm form,
+                          BindingResult result, Model model){
+        boolean error=result.hasErrors();
+
+        //mapstruct should be
+        News news = new News();
+        news.setBody(form.getBody());
+        news.setTitle(form.getTitle());
+
+        if (!error && !newsService.saveNews(news)) {
+            model.addAttribute("message", "Title already taken");
         }
-        else model.addAttribute("newsForm",form);
+        model.addAttribute("newsForm",error?form:new NewsForm());
+
         model.addAttribute("newsList", newsService.findAll());
+
         return "index";
     }
 }
