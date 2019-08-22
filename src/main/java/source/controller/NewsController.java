@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import source.entity.News;
@@ -24,6 +25,12 @@ public class NewsController {
     public NewsController(NewsService newsService, ModeratedNewsService moderatedNewsService) {
         this.newsService = newsService;
         this.moderatedNewsService = moderatedNewsService;
+    }
+
+    @GetMapping("/news/{id}")
+    public String getNewsPage(@PathVariable("id")int id, Model model) {
+        model.addAttribute("news",newsService.finById(id));
+        return "news-page";
     }
 
     @GetMapping("/")
@@ -51,7 +58,8 @@ public class NewsController {
 
         model.addAttribute("newsList", TransformModeratedNewsToNews.
                 transform(moderatedNewsService.findAll()));
-
+        if(!error)
+            model.addAttribute("message", "Your news is moderating...");
         return "index";
     }
 }

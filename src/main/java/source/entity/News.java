@@ -20,6 +20,18 @@ public class News {
 
     public News(){}
 
+    public News(int id,String title, String body) {
+        this.id=id;
+        this.title = title;
+        this.body = body;
+    }
+
+
+    public News(String title, String body) {
+        this.title = title;
+        this.body = body;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(title);

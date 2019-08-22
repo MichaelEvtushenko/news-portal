@@ -11,7 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name="users", uniqueConstraints = {@UniqueConstraint(name="USER_NAME_UQ",
         columnNames = "user_name")})
-public class User {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
@@ -34,7 +34,6 @@ public class User {
                     columnNames = {"user_fk","role_fk"}))
     private Set<Role> roles=new HashSet<>();
 
-    public User(){}
 
     @Override
     public boolean equals(Object obj) {

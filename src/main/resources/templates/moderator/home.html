@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Moderator page</title>
+</head>
+<body>
+
+<table border="1px">
+
+    <tr><th>Title</th><th></th></tr>
+
+    <tr th:each="news,iterStat:${allNews}">
+        <td><a th:href="@{/news/{id}(id=${news.id})}" th:utext="${news.title}"></a></td>
+        <td>
+            <form th:href="@{/moderator/{id}(id=${news.id})}" th:object="${formPost}">
+                <input type="hidden" }">
+                <input type="submit" value="POST">
+            </form>
+        </td>
+    </tr>
+
+</table>
+
+</body>
+</html>

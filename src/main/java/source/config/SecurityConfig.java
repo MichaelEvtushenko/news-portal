@@ -34,15 +34,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/","/news/*").permitAll()
                 .antMatchers("/sign-up","/login").anonymous()
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/moderator/**").access("hasRole('ROLE_MODERATOR')")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login")
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/")
                 .and()
-                .exceptionHandling().accessDeniedPage("/");
+                .exceptionHandling().accessDeniedPage("/403");
     }
 
     @Override

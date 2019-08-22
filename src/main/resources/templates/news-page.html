@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>News</title>
+</head>
+<body>
+    <div style="margin: 5% 10% ">
+        <h2 th:utext="${news.title}"></h2>
+        <br>
+        <br>
+        <p style="font-size: 18px" th:utext="${news.body}"></p>
+        <br>
+        <br>
+        <div sec:authorize="hasRole('ROLE_MODERATOR')">
+            <a th:href="@{/moderator}">Back</a>
+        </div>
+        <div sec:authorize="!hasRole('ROLE_MODERATOR') && !hasRole('ROLE_ADMIN') || !isAuthenticated()">
+            <a th:href="@{/}">Back</a>
+        </div>
+    </div>
+</body>
+</html>

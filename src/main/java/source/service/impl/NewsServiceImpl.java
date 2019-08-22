@@ -29,4 +29,9 @@ public class NewsServiceImpl implements NewsService {
         newsRepo.save(news);
         return true;
     }
+
+    @Override
+    public News finById(int id) {
+        return newsRepo.findById(id).orElse(null);
+    }
 }

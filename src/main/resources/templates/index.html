@@ -17,16 +17,19 @@
     <a th:href="@{/logout}">Logout</a>
 </div>
 
+<div sec:authorize="hasRole('ROLE_MODERATOR')">
+    <a th:href="@{/moderator}">Moderator</a>
+</div>
+
 <br>
 <br>
 
 <table border="1px">
 
-    <tr><th>Title</th> <th>Body</th></tr>
+    <tr><th>Title</th></tr>
 
     <tr th:each="news,iter:${newsList}">
-        <td th:utext="${news.getTitle()}"></td>
-        <td th:utext="${news.getBody()}"></td>
+        <td><a th:href="@{/news/{id}(id=${news.id})}" th:utext="${news.title}"></a></td>
     </tr>
 
 </table>
