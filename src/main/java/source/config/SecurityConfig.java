@@ -34,10 +34,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/sign-up","/login","/").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/sign-up","/login").anonymous()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login");
+                .formLogin().loginPage("/login")
+                .and()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/")
+                .and()
+                .exceptionHandling().accessDeniedPage("/");
     }
 
     @Override

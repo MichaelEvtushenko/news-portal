@@ -1,6 +1,7 @@
 package source.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "news",uniqueConstraints = {@UniqueConstraint(name="NEWS_TITLE_UQ",
@@ -18,6 +19,18 @@ public class News {
     private String body;
 
     public News(){}
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(title);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof News)
+            return Objects.equals(this.getTitle(), ((News) obj).getTitle());
+        return false;
+    }
 
     public int getId() {
         return id;

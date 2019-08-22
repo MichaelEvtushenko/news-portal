@@ -5,6 +5,7 @@ import org.springframework.data.annotation.TypeAlias;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -22,7 +23,9 @@ public class User {
     @Column(name = "user_password",nullable = false)
     private String password;
 
-    @ManyToMany
+    //fetch type should be fixed to LAZY:
+    //if it switches on LAZY got exception in UserServiceImpl
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name="user_role",
             joinColumns = @JoinColumn(name = "user_fk"),
@@ -32,6 +35,13 @@ public class User {
     private Set<Role> roles=new HashSet<>();
 
     public User(){}
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof User)
+            return Objects.equals(getName(),((User) obj).getName());
+        return false;
+    }
 
     public int getId() {
         return id;

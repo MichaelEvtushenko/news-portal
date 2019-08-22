@@ -8,27 +8,29 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import source.entity.News;
 import source.model.NewsForm;
+import source.service.ModeratedNewsService;
 import source.service.NewsService;
-
-import java.io.IOException;
-
+import source.utils.TransformModeratedNewsToNews;
 
 @Controller
 public class NewsController {
 
     private final NewsService newsService;
+    private final ModeratedNewsService moderatedNewsService;
 
-    public NewsController(NewsService newsService) {
+    public NewsController(NewsService newsService, ModeratedNewsService moderatedNewsService) {
         this.newsService = newsService;
+        this.moderatedNewsService = moderatedNewsService;
     }
 
     @GetMapping("/")
     public String getAll(Model model) {
-        model.addAttribute("newsList", newsService.findAll());
+        model.addAttribute("newsList", TransformModeratedNewsToNews.
+                transform(moderatedNewsService.findAll()));
+
         model.addAttribute("newsForm", new NewsForm());
         return "index";
     }
@@ -47,7 +49,8 @@ public class NewsController {
         }
         model.addAttribute("newsForm",error?form:new NewsForm());
 
-        model.addAttribute("newsList", newsService.findAll());
+        model.addAttribute("newsList", TransformModeratedNewsToNews.
+                transform(moderatedNewsService.findAll()));
 
         return "index";
     }
