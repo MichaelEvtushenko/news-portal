@@ -11,7 +11,7 @@ public class NewsForm {
     private String title;
 
     @Size(max = 500, message = "Title must be 1-500 symbols")
-    @NotBlank(message = "Body must be not blank")
+    @NotBlank(message = "Body cannot be empty")
     private String body;
 
     public NewsForm(){}
