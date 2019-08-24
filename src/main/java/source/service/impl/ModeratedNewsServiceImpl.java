@@ -7,24 +7,19 @@ import source.entity.News;
 import source.entity.User;
 import source.repository.ModeratedNewsRepository;
 import source.service.ModeratedNewsService;
-import source.service.NewsService;
 import source.service.UserService;
 
-import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 
 @Service
 public class ModeratedNewsServiceImpl implements ModeratedNewsService {
+
     private final ModeratedNewsRepository moderatedNewsRepo;
-    private final NewsService newsService;
     private final UserService userService;
 
-    public ModeratedNewsServiceImpl(ModeratedNewsRepository moderatedNewsRepo, NewsService newsService, UserService userService) {
+    public ModeratedNewsServiceImpl(ModeratedNewsRepository moderatedNewsRepo, UserService userService) {
         this.moderatedNewsRepo = moderatedNewsRepo;
-        this.newsService = newsService;
         this.userService = userService;
     }
 
@@ -42,18 +37,7 @@ public class ModeratedNewsServiceImpl implements ModeratedNewsService {
 
     @Override
     public Set<News> findUnmoderatedNews() {
-        Set<News> unmoderatedNews=new HashSet<>();
-
-        Iterable<ModeratedNews> moderatedNews = findAll();
-        Iterable<News> allNews = newsService.findAll();
-
-        for(News n:allNews){
-            for(ModeratedNews mn:moderatedNews){
-                if(mn.getId()!=n.getId())
-                    unmoderatedNews.add(n);
-            }
-        }
-        return unmoderatedNews;
+        return moderatedNewsRepo.findUnmoderatedNews();
     }
 
     @Override

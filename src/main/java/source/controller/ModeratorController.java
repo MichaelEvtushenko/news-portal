@@ -24,12 +24,19 @@ public class ModeratorController {
     @GetMapping("")
     public String homePage(Model model){
         model.addAttribute("allNews",moderatedNewsService.findUnmoderatedNews());
-        model.addAttribute("formPost",new ModeratedNews());
         return "moderator/home";
     }
-    @GetMapping("/{id}")
-    public String homePage(@PathVariable("id")int id, Model model){
-       moderatedNewsService.save(moderatedNewsService.findById(id));
-       return "redirect:/moderator";
+    @GetMapping("/post/{id}")
+    public String postNews(@PathVariable("id")int id, Model model){
+        ModeratedNews moderatedNews=new ModeratedNews();
+        moderatedNews.setNews(newsService.finById(id));
+        moderatedNewsService.save(moderatedNews);
+        return "redirect:/moderator";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteNews(@PathVariable("id")int id, Model model){
+        newsService.deleteById(id);
+        return "redirect:/moderator";
     }
 }

@@ -28,8 +28,8 @@
 
     <tr><th>Title</th></tr>
 
-    <tr th:each="news,iter:${newsList}">
-        <td><a th:href="@{/news/{id}(id=${news.id})}" th:utext="${news.title}"></a></td>
+    <tr th:each="mod_news,iter:${newsList}">
+        <td><a th:href="@{/news/{id}(id=${mod_news.news.id})}" th:utext="${mod_news.news.title}"></a></td>
     </tr>
 
 </table>
@@ -49,6 +49,6 @@
     </form>
     <br>
     <br>
-    <span th:if="${message!=null}" th:utext="${message}"></span>
+    <span th:utext="${message}"></span>
 </body>
 </html>

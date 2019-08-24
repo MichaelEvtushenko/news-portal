@@ -45,7 +45,7 @@ public class AuthController {
             error=true;
         }
         if(error)
-            return "/sign-up";
+            return "sign-up";
         return "redirect:/";
     }
 }

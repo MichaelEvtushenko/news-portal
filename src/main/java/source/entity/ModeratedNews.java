@@ -7,7 +7,7 @@ import java.util.Set;
 @Entity
 @Table(name="moderated_news",uniqueConstraints = @UniqueConstraint(
         name="MODERATED_NEWS_PAIR_FK_UQ",
-        columnNames = "moderator_fk"))
+        columnNames = {"moderator_fk","news_fk"}))
 public class ModeratedNews {
 
     @Id
@@ -15,8 +15,9 @@ public class ModeratedNews {
     @Column(name="moderated_news_id")
     private int id;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private Set<News> news=new HashSet<>();
+    @OneToOne
+    @JoinColumn(name="news_fk")
+    private News news;
 
     @OneToOne
     @JoinColumn(name="moderator_fk")
@@ -30,11 +31,11 @@ public class ModeratedNews {
         this.id = id;
     }
 
-    public Set<News> getNews() {
+    public News getNews() {
         return news;
     }
 
-    public void setNews(Set<News> news) {
+    public void setNews(News news) {
         this.news = news;
     }
 

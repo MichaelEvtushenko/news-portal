@@ -8,19 +8,19 @@
 
 <table border="1px">
 
-    <tr><th>Title</th><th></th></tr>
+    <tr><th>Title</th><th>Post</th><th>Delete</th></tr>
 
-    <tr th:each="news,iterStat:${allNews}">
+    <tr th:each="news:${allNews}">
         <td><a th:href="@{/news/{id}(id=${news.id})}" th:utext="${news.title}"></a></td>
-        <td>
-            <form th:href="@{/moderator/{id}(id=${news.id})}" th:object="${formPost}">
-                <input type="hidden" }">
-                <input type="submit" value="POST">
-            </form>
-        </td>
+        <td><a th:href="@{/moderator/post/{id}(id=${news.id})}">Post</a> </td>
+        <td><a th:href="@{/moderator/delete/{id}(id=${news.id})}">Delete</a> </td>
     </tr>
-
 </table>
+
+<br>
+<br>
+<br>
+<a th:href="@{/}">Home</a>
 
 </body>
 </html>

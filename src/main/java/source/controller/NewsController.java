@@ -1,8 +1,8 @@
 package source.controller;
 
-import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,10 @@ import source.entity.News;
 import source.model.NewsForm;
 import source.service.ModeratedNewsService;
 import source.service.NewsService;
-import source.utils.TransformModeratedNewsToNews;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Collection;
 
 @Controller
 public class NewsController {
@@ -34,16 +37,26 @@ public class NewsController {
     }
 
     @GetMapping("/")
-    public String getAll(Model model) {
-        model.addAttribute("newsList", TransformModeratedNewsToNews.
-                transform(moderatedNewsService.findAll()));
+    public String getAll(Model model, HttpServletRequest req) {
+        HttpSession session = req.getSession();
 
-        model.addAttribute("newsForm", new NewsForm());
+        model.addAttribute("newsList",moderatedNewsService.findAll());
+        model.addAttribute("message",session.getAttribute("message"));
+        model.addAttribute("org.springframework.validation.BindingResult.newsForm",
+                ((BindingResult) session.getAttribute("org.springframework.validation.BindingResult.newsForm")));
+                
+        model.addAttribute("newsForm",
+                session.getAttribute("newsForm")==null?new NewsForm():
+                session.getAttribute("newsForm"));
+
+        invalidateAttributes(session,"message","newsForm","org.springframework.validation.BindingResult.newsForm");
         return "index";
     }
     @PostMapping("/")
     public String addNews(@ModelAttribute("newsForm") @Validated NewsForm form,
-                          BindingResult result, Model model){
+                          BindingResult result, ModelMap model, HttpServletRequest req){
+        HttpSession session = req.getSession();
+
         boolean error=result.hasErrors();
 
         //mapstruct should be
@@ -52,14 +65,21 @@ public class NewsController {
         news.setTitle(form.getTitle());
 
         if (!error && !newsService.saveNews(news)) {
-            model.addAttribute("message", "Title already taken");
+            req.getSession().setAttribute("message","Title already taken");
+            error=true;
         }
-        model.addAttribute("newsForm",error?form:new NewsForm());
+        req.getSession().setAttribute("newsForm",error?form:new NewsForm());
 
-        model.addAttribute("newsList", TransformModeratedNewsToNews.
-                transform(moderatedNewsService.findAll()));
         if(!error)
-            model.addAttribute("message", "Your news is moderating...");
-        return "index";
+           req.getSession().setAttribute("message", "Your news is moderating...");
+
+        session.setAttribute("org.springframework.validation.BindingResult.newsForm",
+                model.get("org.springframework.validation.BindingResult.newsForm"));
+
+        return "redirect:/";
+    }
+    private void invalidateAttributes(HttpSession session, String...attrs){
+        for(String attr:attrs)
+            session.removeAttribute(attr);
     }
 }

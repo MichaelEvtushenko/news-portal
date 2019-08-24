@@ -9,4 +9,5 @@ public interface NewsService {
     Iterable<News> findAll();
     boolean saveNews(News news);
     News finById(int id);
+    void deleteById(int id);
 }

@@ -34,4 +34,9 @@ public class NewsServiceImpl implements NewsService {
     public News finById(int id) {
         return newsRepo.findById(id).orElse(null);
     }
+
+    @Override
+    public void deleteById(int id) {
+        newsRepo.deleteById(id);
+    }
 }
