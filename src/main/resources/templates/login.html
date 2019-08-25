@@ -13,12 +13,16 @@
         <br/>
         <input type="submit" value="Login">
     </form>
-
+    <br>
+    <br>
     <div style="color:red;font-size: 18px" th:with="error=${#request.getParameter('error')}">
         <div th:if="${error!=null}">
             Invalid username or password
         </div>
     </div>
-
+    <br>
+    <p>Not signed up yet?</p>
+    <br>
+    <p>Click <a th:href="@{/sign-up}">here</a> to sign up</p>
 </body>
 </html>

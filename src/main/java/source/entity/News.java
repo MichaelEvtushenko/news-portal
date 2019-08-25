@@ -2,6 +2,7 @@ package source.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "news",uniqueConstraints = {@UniqueConstraint(name="NEWS_TITLE_UQ",
@@ -17,6 +18,9 @@ public class News {
 
     @Column(name="news_body",nullable = false, length = 500)
     private String body;
+
+    @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Comment> comments;
 
     public News(){}
 
@@ -66,5 +70,13 @@ public class News {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }

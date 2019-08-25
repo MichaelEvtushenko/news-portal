@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import source.entity.News;
+import source.model.CommentForm;
 import source.model.NewsForm;
 import source.service.ModeratedNewsService;
 import source.service.NewsService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Collection;
 
 @Controller
 public class NewsController {
@@ -32,7 +32,11 @@ public class NewsController {
 
     @GetMapping("/news/{id}")
     public String getNewsPage(@PathVariable("id")int id, Model model) {
-        model.addAttribute("news",newsService.finById(id));
+        News news = newsService.finById(id);
+        if(news==null)
+            return "invalidURI";
+        model.addAttribute("news",news);
+        model.addAttribute("commentForm",new CommentForm());
         return "news-page";
     }
 

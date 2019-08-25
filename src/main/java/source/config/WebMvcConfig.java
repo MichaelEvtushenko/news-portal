@@ -10,6 +10,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     protected void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/403").setViewName("accessDenied");
-        registry.addViewController("/**").setViewName("accessDenied");
+        registry.addViewController("/**").setViewName("invalidURI");
     }
 }

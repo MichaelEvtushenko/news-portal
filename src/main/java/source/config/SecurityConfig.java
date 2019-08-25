@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/","/news/*","/test").permitAll()
+                .antMatchers("/","/news/*").permitAll()
                 .antMatchers("/sign-up","/login").anonymous()
                 .antMatchers("/moderator/**").access("hasRole('ROLE_MODERATOR')")
                 .anyRequest().authenticated()

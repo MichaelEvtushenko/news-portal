@@ -6,17 +6,62 @@
     <title>News</title>
 </head>
 <body>
+
     <div style="margin: 5% 10% ">
         <table border="1px">
             <tr><th th:utext="${news.title}"></th></tr>
             <tr><td style="font-size: 18px" th:utext="${news.body}"></td></tr>
         </table>
+
+        <br>
+        <br>
+        <br>
+
+<!--        <div sec:authorize="isAuthenticated()">-->
+
+            <form method="post" th:object="${commentForm}"
+                  th:action="@{/comment/add/{id}(id=${news.id})}">
+                <label>Comment:
+                    <textarea th:field="*{body}" type="text" placeholder="Your comment">
+                    </textarea>
+                </label>
+                <input type="submit" value="Leave a comment"/>
+            </form>
+
+            <br>
+            <br>
+            <br>
+
+            <table border="1px">
+                <tr>
+                    <th>Body</th>
+                    <th>User</th>
+<!--                    <th></th>-->
+<!--                    <th></th>-->
+                </tr>
+            <tr th:each="comment:${news.comments}">
+                <td th:utext="${comment.body}"></td>
+                <td th:utext="${comment.user.name}"></td>
+                <div th:if="${#authentication.name==comment.user.name}">
+                    <td>
+                    <a th:href="@{/comment/delete/{comment_id}(comment_id=${comment.id})}">Delete</a>
+                    </td>
+                    <td>
+                    <a th:href="@{/comment/update/{comment_id}(comment_id=${comment.id})}">Update</a>
+                    </td>
+                </div>
+            </tr>
+        </table>
+<!--        </div>-->
+
+    </div>
 <!--        <div sec:authorize="hasRole('ROLE_MODERATOR')">-->
 <!--            <a th:href="@{/moderator}">Back</a>-->
 <!--        </div>-->
 <!--        <div sec:authorize="!hasRole('ROLE_MODERATOR') && !hasRole('ROLE_ADMIN') || !isAuthenticated()">-->
 <!--            <a th:href="@{/}">Back</a>-->
 <!--        </div>-->
-    </div>
+<!--    </div>-->
+
 </body>
 </html>

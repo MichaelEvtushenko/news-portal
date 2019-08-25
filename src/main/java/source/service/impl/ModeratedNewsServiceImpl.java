@@ -6,6 +6,7 @@ import source.entity.ModeratedNews;
 import source.entity.News;
 import source.entity.User;
 import source.repository.ModeratedNewsRepository;
+import source.security.utils.SecurityUtils;
 import source.service.ModeratedNewsService;
 import source.service.UserService;
 
@@ -17,10 +18,12 @@ public class ModeratedNewsServiceImpl implements ModeratedNewsService {
 
     private final ModeratedNewsRepository moderatedNewsRepo;
     private final UserService userService;
+    private final SecurityUtils securityUtils;
 
-    public ModeratedNewsServiceImpl(ModeratedNewsRepository moderatedNewsRepo, UserService userService) {
+    public ModeratedNewsServiceImpl(ModeratedNewsRepository moderatedNewsRepo, UserService userService, SecurityUtils securityUtils) {
         this.moderatedNewsRepo = moderatedNewsRepo;
         this.userService = userService;
+        this.securityUtils = securityUtils;
     }
 
     @Override
@@ -42,9 +45,7 @@ public class ModeratedNewsServiceImpl implements ModeratedNewsService {
 
     @Override
     public boolean save(ModeratedNews moderatedNews) {
-        org.springframework.security.core.userdetails.User principal = ((org.springframework.security.core.userdetails.User)
-                SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        User userDb = userService.findUserByName(principal.getUsername());
+        User userDb = securityUtils.getAuthenticatedUserFromDB();
         moderatedNews.setModerator(userDb);
         moderatedNewsRepo.save(moderatedNews);
         return true;

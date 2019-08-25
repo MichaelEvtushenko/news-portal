@@ -34,6 +34,8 @@ public class User{
                     columnNames = {"user_fk","role_fk"}))
     private Set<Role> roles=new HashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Comment> comments;
 
     @Override
     public boolean equals(Object obj) {
