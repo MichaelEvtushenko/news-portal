@@ -3,65 +3,91 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>News</title>
 </head>
 <body>
 
-    <div style="margin: 5% 10% ">
-        <table border="1px">
-            <tr><th th:utext="${news.title}"></th></tr>
-            <tr><td style="font-size: 18px" th:utext="${news.body}"></td></tr>
-        </table>
+<menu th:replace="parts/menu"></menu>
 
-        <br>
-        <br>
-        <br>
+    <div class="container mt-5" style="text-align: center">
 
-<!--        <div sec:authorize="isAuthenticated()">-->
+        <h1 th:utext="${news.title}"></h1>
 
+        <div class="mb-2" style="font-size: 22px; margin-left: 10%;margin-right: 10%" th:utext="${news.body}"></div>
+        <hr/>
+        <div class="form-group container mt-3">
             <form method="post" th:object="${commentForm}"
                   th:action="@{/comment/add/{id}(id=${news.id})}">
-                <label>Comment:
-                    <textarea th:field="*{body}" type="text" placeholder="Your comment">
-                    </textarea>
-                </label>
-                <input type="submit" value="Leave a comment"/>
+                <label for="comment">Leave a comment</label>
+                <textarea rows="3" class="form-control" style="margin-left: 32%;width: 35%" id = "comment" th:field="*{body}" type="text" placeholder="Your comment"></textarea>
+                <span style="color:red;" th:if="${#fields.hasErrors('body')}" th:errors="*{body}"></span>
+                <button type="submit" class="btn btn-primary mt-2">Leave a comment</button>
             </form>
-
-            <br>
-            <br>
-            <br>
-
-            <table border="1px">
-                <tr>
-                    <th>Body</th>
-                    <th>User</th>
-<!--                    <th></th>-->
-<!--                    <th></th>-->
-                </tr>
-            <tr th:each="comment:${news.comments}">
-                <td th:utext="${comment.body}"></td>
-                <td th:utext="${comment.user.name}"></td>
-                <div th:if="${#authentication.name==comment.user.name}">
-                    <td>
-                    <a th:href="@{/comment/delete/{comment_id}(comment_id=${comment.id})}">Delete</a>
-                    </td>
-                    <td>
-                    <a th:href="@{/comment/update/{comment_id}(comment_id=${comment.id})}">Update</a>
-                    </td>
-                </div>
-            </tr>
-        </table>
-<!--        </div>-->
+        </div>
 
     </div>
-<!--        <div sec:authorize="hasRole('ROLE_MODERATOR')">-->
-<!--            <a th:href="@{/moderator}">Back</a>-->
-<!--        </div>-->
-<!--        <div sec:authorize="!hasRole('ROLE_MODERATOR') && !hasRole('ROLE_ADMIN') || !isAuthenticated()">-->
-<!--            <a th:href="@{/}">Back</a>-->
-<!--        </div>-->
-<!--    </div>-->
+
+
+<div class="container mt-4" style="text-align: center">
+
+        <div class="row">
+
+            <div class="col-sm-4 mb-3" th:each="comment:${news.comments}">
+                <div class="card">
+
+                    <div class="card-body">
+                        <p class="card-text" th:utext="${comment.body}"></p>
+                    </div>
+
+                    <div class="card-footer">
+                        <div style="text-align: right">
+                            <span th:text="${comment.user.name+', '+comment.date}"></span>
+                            <div th:if="${#authentication.name==comment.user.name}">
+                                <a th:href="@{/comment/delete/{comment_id}(comment_id=${comment.id})}">Delete</a>
+                                <a th:href="@{/comment/update/{comment_id}(comment_id=${comment.id})}">Update</a>
+                            </div>
+                            <div sec:authorize="hasRole('ROLE_MODERATOR')" th:if="${#authentication.name!=comment.user.name}">
+                                <a th:href="@{/comment/delete/{comment_id}(comment_id=${comment.id})}">Delete</a>
+                                <a th:href="@{/comment/update/{comment_id}(comment_id=${comment.id})}">Update</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+</div>
+
+<!--            <table border="1px">-->
+<!--                <tr>-->
+<!--                    <th>Body</th>-->
+<!--                    <th>User</th>-->
+<!--                    <th>Date</th>-->
+<!--                </tr>-->
+<!--            <tr th:each="comment:${news.comments}">-->
+<!--                <td th:utext="${comment.body}"></td>-->
+<!--                <td th:utext="${comment.user.name}"></td>-->
+<!--                <td th:utext="${comment.date}"></td>-->
+<!--                <div th:if="${#authentication.name==comment.user.name}">-->
+<!--                    <td>-->
+<!--                    <a th:href="@{/comment/delete/{comment_id}(comment_id=${comment.id})}">Delete</a>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                    <a th:href="@{/comment/update/{comment_id}(comment_id=${comment.id})}">Update</a>-->
+<!--                    </td>-->
+<!--                </div>-->
+<!--                <div sec:authorize="hasRole('ROLE_MODERATOR')" th:if="${#authentication.name!=comment.user.name}">-->
+<!--                    <td>-->
+<!--                        <a th:href="@{/comment/delete/{comment_id}(comment_id=${comment.id})}">Delete</a>-->
+<!--                    </td>-->
+<!--                </div>-->
+<!--            </tr>-->
+<!--        </table>-->
+<!--        -->
 
 </body>
 </html>

@@ -6,12 +6,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import source.entity.Comment;
 import source.entity.News;
-import source.entity.User;
 
-import java.util.Set;
+import java.util.List;
 
 public interface CommentRepository extends CrudRepository<Comment,Integer> {
-    Set<Comment> findAllByNews(News news);
+
+    @Query("from Comment c order by c.date ")
+    List<Comment> findAllByNews(News news);
 
     @Query("delete from Comment c where c.id=:id")
     @Modifying

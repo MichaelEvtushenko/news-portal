@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Update</title>
 </head>
 <body>
+<div style="text-align: center" class="container mt-3">
     <form th:object="${commentForm}" th:action="@{/comment/update}" method="post">
-        <input type="text" th:field="*{body}" placeholder="Comment">
-        <br>
-        <input type="hidden" th:field="*{id}">
-        <input type="submit" value="Update">
+        <div class="form-group">
+            <label for="body">Your comment</label>
+            <textarea style="margin-left: 32%;width: 35%" class="form-control" id="body" type="text" th:field="*{body}" placeholder="Your comment"></textarea>
+            <input type="hidden" th:field="*{id}">
+            <button style="font-size: 18px" type="submit" class="btn btn-primary mt-2">Update</button>
+        </div>
     </form>
+</div>
 </body>
 </html>

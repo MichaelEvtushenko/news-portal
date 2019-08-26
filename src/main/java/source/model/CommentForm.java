@@ -4,6 +4,7 @@ import source.entity.News;
 import source.entity.User;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 public class CommentForm {
@@ -12,6 +13,8 @@ public class CommentForm {
     private User user;
     private News news;
     @NotBlank(message = "Comment cannot be empty")
+    @Pattern(regexp = "[A-Za-z0-9, .!?;:]*"
+            ,message = "Comment must only consist of regular symbols (without '<','/' for e.g)")
     private String body;
 
     public CommentForm(){}

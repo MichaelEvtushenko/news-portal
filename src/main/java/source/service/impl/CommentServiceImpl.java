@@ -10,8 +10,13 @@ import source.security.utils.SecurityUtils;
 import source.service.CommentService;
 import source.service.NewsService;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -26,7 +31,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Set<Comment> findAllByNews(int id) {
+    public List<Comment> findAllByNews(int id) {
         News news = newsService.finById(id);
         if(news==null)
             return null;
@@ -39,8 +44,10 @@ public class CommentServiceImpl implements CommentService {
             return false;
         User userDb = securityUtils.getAuthenticatedUserFromDB();
         comment.setUser(userDb);
-        //fix date
-//        comment.setDate(new Date());
+//        fix date
+        Date date=new Date();
+
+        comment.setDate(date);
         commentRepo.save(comment);
         return true;
     }

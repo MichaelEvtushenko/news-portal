@@ -3,24 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body>
+<body style="font-size: 18px">
+
+<div class="container mt-5">
+    <div style="text-align: center;">
     <form th:href="@{/sign-up}" method="post" th:object="${userForm}">
-        <label>Username<input  placeholder="Username" type="text" th:field="*{username}"></label>
-        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
-        <br>
-        <br>
-        <label>Password <input type="password" placeholder="Password" th:field="*{password}"></label>
-        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-        <br>
-        <br>
-        <label>Repeat password <input type="password" placeholder="Password" th:field="*{checkPassword}"></label>
-        <br>
-        <br>
-        <input type="submit" value="Sign up">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input class="form-control" style="margin-left: 32%;width: 35%"  placeholder="Enter username" type="text" th:field="*{username}" id="username">
+            <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" style="margin-left: 32%;width: 35%" placeholder="Enter password" th:field="*{password}" id="password">
+            <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="repeatPassword">Repeat password</label>
+            <input type="password" class="form-control" style="margin-left: 32%;width: 35%" placeholder="Repeat password" th:field="*{checkPassword}" id="repeatPassword">
+        </div>
+
+        <button style="font-size: 18px" type="submit" class="btn btn-primary">Sign up</button>
+
     </form>
-
-    <span th:if="${errorMessage!=null}" th:utext="${errorMessage}"></span>
-
+    <div class="container mt-2">
+        <span style="color:red" th:if="${errorMessage!=null}" th:utext="${errorMessage}"></span>
+    </div>
+    </div>
+</div>
 </body>
 </html>

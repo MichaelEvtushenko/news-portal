@@ -1,6 +1,7 @@
 package source.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class News {
     private String body;
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Comment> comments;
+    private List<Comment> comments;
 
     public News(){}
 
@@ -72,11 +73,11 @@ public class News {
         this.body = body;
     }
 
-    public Set<Comment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(Set<Comment> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 }

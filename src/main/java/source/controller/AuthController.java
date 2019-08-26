@@ -41,7 +41,7 @@ public class AuthController {
         user.setPassword(form.getPassword());
         user.setName(form.getUsername());
         if(!error && !userService.saveUser(user)) {
-            model.addAttribute("errorMessage", "Username already exists");
+            model.addAttribute("errorMessage", "Username already taken");
             error=true;
         }
         if(error)

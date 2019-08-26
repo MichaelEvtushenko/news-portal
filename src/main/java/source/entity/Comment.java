@@ -11,8 +11,8 @@ public class Comment {
     @Column(name="comment_id")
     private int id;
 
-    @Temporal(value = TemporalType.TIME)
-    @Column(name="commented_time")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name="commented_at")
     private Date date;
 
     @ManyToOne

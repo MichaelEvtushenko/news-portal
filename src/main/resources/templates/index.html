@@ -3,52 +3,41 @@
                 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Start</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>News Portal</title>
 </head>
 <body>
 
-<div sec:authorize="!isAuthenticated()">
-    <a th:href="@{/sign-up}">Sign up</a>
-    <br>
-    <a th:href="@{/login}">Login</a>
-</div>
-
-<div sec:authorize="isAuthenticated()">
-    <a th:href="@{/logout}">Logout</a>
-</div>
-
-<div sec:authorize="hasRole('ROLE_MODERATOR')">
-    <a th:href="@{/moderator}">Moderator</a>
-</div>
-
-<br>
-<br>
-
-<table border="1px">
-
-    <tr><th>Title</th></tr>
-
-    <tr th:each="mod_news,iter:${newsList}">
-        <td><a th:href="@{/news/{id}(id=${mod_news.news.id})}" th:utext="${mod_news.news.title}"></a></td>
-    </tr>
-
-</table>
-
-    <br>
-    <br>
-
+<menu th:replace="parts/menu"></menu>
+<h2 style="text-align: center" class="container mt-3">News</h2>
+<div class="container mt-4" style="text-align: center;">
+        <table style="margin-left: auto;margin-right: auto;text-align: left;font-size: 22px">
+            <tr th:each="mod_news,iter:${newsList}">
+                <td><a th:href="@{/news/{id}(id=${mod_news.news.id})}" th:utext="${mod_news.news.title}"></a></td>
+            </tr>
+        </table>
+<div class="form-group container mt-3">
     <form th:action="@{/}" th:object="${newsForm}" method="post">
-        <label>Title: <input th:field="*{title}" type="text" placeholder="Title"></label>
-        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+        <label for="title">Title</label>
+        <input  style="margin-left: 35%;width: 35%" id="title" th:field="*{title}" type="text" placeholder="Write title of news" class="form-control" >
+        <span style="color:red;" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
         <br>
-        <label>Body:  <textarea th:field="*{body}" type="text" placeholder="Body"></textarea></label>
-        <span th:if="${#fields.hasErrors('body')}" th:errors="*{body}"></span>
+        <label for="body">Body</label>
+        <textarea style="margin-left: 35%;width: 35%"  rows="3" id="body" th:field="*{body}" type="text" placeholder="Write news" class="form-control"></textarea>
+        <span style="color:red;" th:if="${#fields.hasErrors('body')}" th:errors="*{body}"></span>
         <br>
-        <br>
-        <input type="submit" value="Add">
+        <button type="submit" class="btn btn-primary">Add</button>
     </form>
-    <br>
-    <br>
+</div>
+
+
     <span th:utext="${message}"></span>
+</div>
+<footer th:replace="parts/footer"></footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

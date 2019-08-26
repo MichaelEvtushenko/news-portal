@@ -11,5 +11,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/403").setViewName("accessDenied");
         registry.addViewController("/**").setViewName("invalidURI");
+        registry.addViewController("/about").setViewName("about");
     }
 }

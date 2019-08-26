@@ -2,27 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Login</title>
 </head>
-<body>
+<body style="font-size: 18px">
+
+<div class="container mt-5">
+<div style="text-align: center;">
     <form th:action="@{/login}" method="post">
-        <label>Username: <input type="text" name="username"></label>
-        <br/>
-        <label>Password: <input type="text" name="password"></label>
-        <br/>
-        <br/>
-        <input type="submit" value="Login">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input style="margin-left: 32%;width: 35%" type="text" name="username" class="form-control" id="username" placeholder="Enter username">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input style="margin-left: 32%;width: 35%" type="password" name="password" class="form-control" id="password" placeholder="Enter password">
+        </div>
+        <button style="font-size: 18px" type="submit" class="btn btn-primary">Login</button>
     </form>
-    <br>
-    <br>
-    <div style="color:red;font-size: 18px" th:with="error=${#request.getParameter('error')}">
+
+    <div style="color:red;font-size: 19px" th:with="error=${#request.getParameter('error')}">
         <div th:if="${error!=null}">
             Invalid username or password
         </div>
     </div>
-    <br>
-    <p>Not signed up yet?</p>
-    <br>
-    <p>Click <a th:href="@{/sign-up}">here</a> to sign up</p>
+
+    <div class="container mt-2">
+        <div>Not signed up yet?</div>
+        <div>Click <a th:href="@{/sign-up}">here</a> to sign up</div>
+    </div>
+</div>
+</div>
+
 </body>
 </html>
