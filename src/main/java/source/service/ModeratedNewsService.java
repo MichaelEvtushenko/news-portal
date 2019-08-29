@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface ModeratedNewsService {
-    Set<ModeratedNews> findAllByModerator(User moderator);
+    ModeratedNews findByNews(News news);
     Iterable<ModeratedNews> findAll();
     Set<News> findUnmoderatedNews();
     boolean save(ModeratedNews moderatedNews);

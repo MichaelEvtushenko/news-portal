@@ -50,7 +50,6 @@
                             </div>
                             <div sec:authorize="hasRole('ROLE_MODERATOR')" th:if="${#authentication.name!=comment.user.name}">
                                 <a th:href="@{/comment/delete/{comment_id}(comment_id=${comment.id})}">Delete</a>
-                                <a th:href="@{/comment/update/{comment_id}(comment_id=${comment.id})}">Update</a>
                             </div>
                         </div>
                     </div>

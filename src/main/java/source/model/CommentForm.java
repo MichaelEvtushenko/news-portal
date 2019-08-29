@@ -13,7 +13,7 @@ public class CommentForm {
     private User user;
     private News news;
     @NotBlank(message = "Comment cannot be empty")
-    @Pattern(regexp = "[A-Za-z0-9, .!?;:]*"
+    @Pattern(regexp = "[^/<>]*"
             ,message = "Comment must only consist of regular symbols (without '<','/' for e.g)")
     private String body;
 

@@ -11,6 +11,7 @@ import java.util.Set;
 
 @Repository
 public interface ModeratedNewsRepository extends CrudRepository<ModeratedNews,Integer> {
+    ModeratedNews findByNews(News news);
     Set<ModeratedNews> findAllByModerator(User moderator);
     @Query("select n from source.entity.News n left join " +
             "source.entity.ModeratedNews mn on mn.news.id=n.id where mn.id=null")

@@ -9,13 +9,13 @@ public class NewsForm {
     private int id;
 
     @Size(min=4, max = 32, message = "Title must be 4-32 symbols")
-    @Pattern(regexp = "[A-Za-z0-9, .!?;:]*"
+    @Pattern(regexp = "[^/<>]*"
             ,message = "Title must only consist of regular symbols (without '<','/' for e.g)")
     private String title;
 
     @Size(max = 500, message = "Title must be 1-500 symbols")
     @NotBlank(message = "Body cannot be empty")
-    @Pattern(regexp = "[^</]*"
+    @Pattern(regexp = "[^/<>]*"
             ,message = "Body must only consist of regular symbols (without \"<\",\"/\" for e.g)")
     private String body;
 

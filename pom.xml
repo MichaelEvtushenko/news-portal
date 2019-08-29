@@ -56,6 +56,10 @@
         <artifactId>spring-boot-starter-thymeleaf</artifactId>
     </dependency>
 
+    <dependency>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-core</artifactId>
+    </dependency>
 
     <dependency>
         <groupId>org.thymeleaf.extras</groupId>
@@ -69,9 +73,14 @@
 <build>
     <plugins>
         <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-    </plugin>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+        </plugin>
+
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
     </plugins>
 </build>
 

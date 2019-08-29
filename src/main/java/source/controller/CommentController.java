@@ -27,7 +27,6 @@ public class CommentController {
     @GetMapping("/delete/{comment_id}")
     public String deleteComment(@PathVariable("comment_id") int commentId,
                                 @RequestHeader String referer){
-        System.out.println("GET /comment/delete/{comment_id}");
         commentService.deleteById(commentId);
         return "redirect:"+referer;
     }

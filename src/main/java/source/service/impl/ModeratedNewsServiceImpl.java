@@ -27,13 +27,6 @@ public class ModeratedNewsServiceImpl implements ModeratedNewsService {
     }
 
     @Override
-    public Set<ModeratedNews> findAllByModerator(User moderator) {
-        if(moderator!=null)
-            return moderatedNewsRepo.findAllByModerator(moderator);
-        return null;
-    }
-
-    @Override
     public Iterable<ModeratedNews> findAll() {
         return moderatedNewsRepo.findAll();
     }
@@ -56,6 +49,13 @@ public class ModeratedNewsServiceImpl implements ModeratedNewsService {
     public ModeratedNews findById(int id) {
         if(id>0)
             return moderatedNewsRepo.findById(id).orElse(null);
+        return null;
+    }
+
+    @Override
+    public ModeratedNews findByNews(News news) {
+        if(news!=null)
+            return moderatedNewsRepo.findByNews(news);
         return null;
     }
 }
